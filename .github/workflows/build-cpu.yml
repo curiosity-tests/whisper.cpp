@@ -209,7 +209,12 @@ jobs:
         run: |
           LLAMA_ARG_THREADS=$(nproc) GG_BUILD_NO_SVE=1 GG_BUILD_NO_BF16=1 GG_BUILD_EXTRA_TESTS_0=1 bash ./ci/run.sh ./tmp/results ./tmp/mnt
 
-  ggml-ci-arm64-cpu-high-perf-sve:
+  # racecar: job key shortened from ggml-ci-arm64-cpu-high-perf-sve. The key lands
+  # in CURIOSITY_ROOT (/mnt/curiosity-<runid>-<job>-<attempt>-<hash>) and dockerd
+  # appends 41 bytes of libnetwork socket path, which overflowed AF_UNIX sun_path
+  # (108) at 110 bytes -> "bind: invalid argument". Budget is 29 chars for the key.
+  # ccache key below deliberately unchanged so both arms keep the same cache.
+  ggml-ci-arm64-cpu-hiperf-sve:
     runs-on: ubuntu-22.04-arm
 
     steps:
