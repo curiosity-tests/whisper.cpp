@@ -52,7 +52,7 @@ permissions:
 env:
   # The one variable that separates the arms: on baseline, action-checkout
   # skips its Set up Chalk step entirely.
-  CHALK_ON: ${{ github.event_name == 'workflow_dispatch' && inputs.leg != 'baseline' }}
+  CHALK_ON: ${{ inputs.leg == 'instrumented' }}
 
 run-name: "CI (cpu) ${{ inputs.leg || 'push' }} ${{ inputs.racecar_run }}"
 
@@ -80,7 +80,7 @@ jobs:
         with:
           key: ggml-ci-x64-cpu-low-perf
           evict-old-files: 1d
-          save: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+          save: ${{ 'push' == 'push' && github.ref == 'refs/heads/master' }}
 
       - name: Dependencies
         id: depends
@@ -118,7 +118,7 @@ jobs:
         with:
           key: ggml-ci-arm64-cpu-low-perf
           evict-old-files: 1d
-          save: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+          save: ${{ 'push' == 'push' && github.ref == 'refs/heads/master' }}
 
       - name: Dependencies
         id: depends
@@ -156,7 +156,7 @@ jobs:
         with:
           key: ggml-ci-x64-cpu-high-perf
           evict-old-files: 1d
-          save: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+          save: ${{ 'push' == 'push' && github.ref == 'refs/heads/master' }}
 
       - name: Dependencies
         id: depends
@@ -194,7 +194,7 @@ jobs:
         with:
           key: ggml-ci-arm64-cpu-high-perf
           evict-old-files: 1d
-          save: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+          save: ${{ 'push' == 'push' && github.ref == 'refs/heads/master' }}
 
       - name: Dependencies
         id: depends
@@ -237,7 +237,7 @@ jobs:
         with:
           key: ggml-ci-arm64-cpu-high-perf-sve
           evict-old-files: 1d
-          save: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+          save: ${{ 'push' == 'push' && github.ref == 'refs/heads/master' }}
 
       - name: Dependencies
         id: depends
